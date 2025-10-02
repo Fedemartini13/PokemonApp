@@ -11,22 +11,15 @@ body {
     font-size: 2.5em;
 }
 
-
-
 .logo {
     max-width: 200px; 
     margin: 20px auto; 
     display: block; 
 }
 
-
-
-
-/*  Estilo del boton Ver Favoritos */
-
-#ver-favoritos-btn{
-
-
+/* Estilo del botón Ver Favoritos */
+#ver-favoritos-btn,
+.btn-inicio {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -36,32 +29,7 @@ body {
     border-radius: 5px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, transform 0.3s;
-    
-   
-
-
 }
-
-
-
-.btn-inicio{
-
-
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #138ce2; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, transform 0.3s;
-   
-
-
-}
-
-
 
 #header {
     display: flex; 
@@ -71,10 +39,8 @@ body {
 }
 
 #header-buttons {
-    margin-left: auto; /* Mover el contenedor de botones a la derecha */
+    margin-left: auto;
 }
-
-
 
 #search-container {
     margin: 20px 0;
@@ -98,27 +64,23 @@ body {
 
 #lista-pokemones {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* cada 5 columnas */
-    gap: 20px; /* Espacio entre tarjetas */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
     justify-items: center;
     margin: 20px auto; 
     max-width: 1200px; 
-   
 }
-
-
 
 .pokemon-tipo {
     color: #3498db;
     font-weight: bold;
 }
 
-
 .pokemon-card {
     width: 150px;
     border: 1px solid #ddd;
     border-radius: 30px;
-    margin: 10x;
+    margin: 10px;
     padding: 10px;
     text-align: center;
     background-color: white;
@@ -194,19 +156,12 @@ body {
     cursor: pointer;
 }
 
-
-
-/* Ultimo cambio */
-
-
 .pokemon-card h3:hover {
-    color: red; /* Cambia el color al pasar el mouse */
-    cursor: pointer; /* Muestra un cursor de mano */
+    color: red;
+    cursor: pointer;
 }
 
-
-/*Nuevos estilos paginacion*/
-
+/* Estilos paginación */
 #pagination-top, #pagination-bottom {
     text-align: center;
     margin: 16px 0;
@@ -225,39 +180,34 @@ body {
     cursor: default;
 }
 
-
-
-
-
-#anterior-btn{
-
-    padding: 1px 10px;
-    background-color: #138ce2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position: fixed;
-    left: 30px;
-    display: flex;
-
-
-
+/* --- Responsive para móviles --- */
+@media (max-width: 700px) {
+    #lista-pokemones {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100vw;
+        gap: 10px;
+    }
+    .pokemon-card {
+        width: 95vw;
+        max-width: 180px;
+        margin: 5px auto;
+    }
+    #search {
+        width: 90vw;
+        max-width: 250px;
+    }
+    .modal-contenido {
+        width: 95vw;
+        padding: 10px;
+    }
+    .logo {
+        max-width: 120px;
+    }
+    #header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
 }
 
-
-
-#siguiente-btn{
-
-    padding: 1px 10px;
-    background-color: #138ce2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position: fixed;
-    right: 30px;
-    
-
-
-}
+/* --- Fin de responsive --- */
