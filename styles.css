@@ -205,14 +205,24 @@ body {
 }
 
 
+/*Nuevos estilos paginacion*/
 
-/*Paginacion*/
-
-#paginacion {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+#pagination-top, #pagination-bottom {
+    text-align: center;
+    margin: 16px 0;
+}
+.boton-pagina {
+    margin: 0 2px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+.boton-pagina.activo, .boton-pagina:disabled {
+    background: #b3d1fc;
+    font-weight: bold;
+    cursor: default;
 }
 
 
@@ -221,14 +231,15 @@ body {
 
 #anterior-btn{
 
-    padding: 1px 80x;
-    background-color: #3498db;
+    padding: 1px 10px;
+    background-color: #138ce2;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     position: fixed;
     left: 30px;
+    display: flex;
 
 
 
@@ -238,14 +249,15 @@ body {
 
 #siguiente-btn{
 
-    padding: 1px 80x;
-    background-color: #3498db;
+    padding: 1px 10px;
+    background-color: #138ce2;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     position: fixed;
     right: 30px;
+    
 
 
 }

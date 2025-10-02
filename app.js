@@ -9,13 +9,70 @@ document.getElementById('ver-favoritos-btn').addEventListener('click', mostrarFa
 let pokemonList = [];
 let currentOffset = 0;
 let isViewingFavorites = false;
-const limit = 20;
-const maxPokemon = 151; // Por ser 151 la primer generacion
+const limit = 24;
+const maxPokemon = 168  ; // Limitar a los primeros 168 Pokemones
 
 // Inicializar la app
 document.addEventListener('DOMContentLoaded', () => {
     cargarListaPokemon();
+
+    // Buscar al presionar en el input de busqueda
+    searchInput.addEventListener('keydown', (event) => {   // Buscar al presionar enter
+        if (event.key === 'Enter') {
+            searchButton.click(); 
+        }
+    });
 });
+
+
+// Renderizar la paginación
+
+function renderizarPaginacion() {
+    const totalPaginas = Math.ceil(maxPokemon / limit);
+    const paginaActual = Math.floor(currentOffset / limit) + 1;
+
+    function crearBoton(etiqueta, pagina, deshabilitado = false) {
+        return `<button class="boton-pagina" data-pagina="${pagina}" ${deshabilitado ? 'disabled' : ''}>${etiqueta}</button>`;
+    }
+
+    let html = '';
+    html += crearBoton('Primero', 1, paginaActual === 1);
+    html += crearBoton('Anterior', paginaActual - 1, paginaActual === 1);
+
+    // Números de página (máximo 5 visibles)
+    let inicio = Math.max(1, paginaActual - 2);
+    let fin = Math.min(totalPaginas, paginaActual + 2);
+    if (paginaActual <= 3) fin = Math.min(5, totalPaginas);
+    if (paginaActual >= totalPaginas - 2) inicio = Math.max(1, totalPaginas - 4);
+
+    for (let i = inicio; i <= fin; i++) {
+        html += `<button class="boton-pagina ${i === paginaActual ? 'activo' : ''}" data-pagina="${i}">${i}</button>`;
+    }
+
+    html += crearBoton('Siguiente', paginaActual + 1, paginaActual === totalPaginas);
+    html += crearBoton('Último', totalPaginas, paginaActual === totalPaginas);
+
+    document.getElementById('pagination-top').innerHTML = html;
+    document.getElementById('pagination-bottom').innerHTML = html;
+
+    // Eventos
+    document.querySelectorAll('.boton-pagina').forEach(boton => {
+        boton.onclick = (e) => {
+            const pagina = Number(e.target.getAttribute('data-pagina'));
+            if (pagina >= 1 && pagina <= totalPaginas && pagina !== paginaActual) {
+                currentOffset = (pagina - 1) * limit;
+                pokemonListElement.innerHTML = '';
+                cargarListaPokemon();
+            }
+        };
+    });
+}
+
+
+
+
+
+
 
 // Cargar lista inicial de Pokemones
 function cargarListaPokemon() {
@@ -25,43 +82,12 @@ function cargarListaPokemon() {
             data.results.forEach(pokemon => {
                 fetchDetallePokemon(pokemon.url);
             });
+
+            renderizarPaginacion();
         });
 }
 
 
-
-/*
-
-
-// Paginacion 
-
-
-const anteriorButton = document.getElementById('anterior-btn');
-const siguienteButton = document.getElementById('siguiente-btn');
-
-
-
-
-// siguiente
-siguienteButton.addEventListener('click', () => {
-  if (currentOffset + limit < maxPokemon) {
-    currentOffset += limit;
-     pokemonListElement.innerHTML = "";
-    cargarListaPokemon();
-  }
-});
-
-// anterior
-anteriorButton.addEventListener('click', () => {
-  if (currentOffset - limit >= 0) {
-    currentOffset -= limit;
-     pokemonListElement.innerHTML = "";
-    cargarListaPokemon();
-  }
-});
-
-
-*/
 
 
 
@@ -193,7 +219,7 @@ loadMoreButton.addEventListener('click', () => {
 
 
 
-
+/* Suplantado por la paginacion
 
 // Cargar automáticamente al scrollear
 window.addEventListener('scroll', () => {
@@ -204,7 +230,7 @@ window.addEventListener('scroll', () => {
         }
     }
 });
-
+*/
 
 // Mostrar favoritos en una lista
 function mostrarFavoritos() {
@@ -238,11 +264,3 @@ function mostrarFavoritos() {
         });
     }
 }
-
-
-
-searchInput.addEventListener('keydown', (event) => {   // Buscar al presionar enter
-    if (event.key === 'Enter') {
-        searchButton.click(); 
-    }
-});
