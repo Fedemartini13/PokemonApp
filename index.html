@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+
+<div id="header">
+
+
+    <button id="ver-favoritos-btn">Ver Favoritos</button>
+   
+    <a href="index.html" class="btn-inicio">Ver Todos</a> 
+  
+
+</div>
+        
+        
+
+
+    </header>
+
+
+<main>
+
+    <div id="app">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div id="search-container">
+            <input type="text" id="search" placeholder="Buscar pokemon por ID o Nombre...">
+            <button id="search-btn">Buscar</button>
+        </div>
+
+        </div>
+
+    <!--Botones paginacion-->
+
+    <div id="paginacion">
+
+        <button id="anterior-btn"> << Pagina Anterior  </button>
+        <button id="siguiente-btn">Pagina Siguiente >> </button>
+   
+    </div>
+        <div id="lista-pokemones"></div>
+        <button id="ver-mas-btn">Ver Mas</button>
+        
+
+
+        
+
+    <!-- Modal -->
+    <div id="pokemon-modal" class="modal">
+        <div class="modal-contenido">
+            <span id="close-modal" class="close">&times;</span>
+            <div id="modal-info">
+                <img id="pokemon-image" src="" alt="Pokemon Imagen" class="modal-img">
+                <div id="pokemon-details">
+                    <h2 id="pokemon-name"></h2>
+                    <p><strong>Altura:</strong> <span id="pokemon-height"></span></p>
+                    <p><strong>Peso:</strong> <span id="pokemon-weight"></span></p>
+                    <p><strong>Habilidades:</strong> <span id="pokemon-abilities"></span></p>
+                    <p><strong>Tipo:</strong> <span id="pokemon-tipo"></span></p>
+                    <button id="favorite-btn" class="favorite-btn"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</main>
+</body>
+</html>
