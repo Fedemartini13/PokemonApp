@@ -209,3 +209,51 @@ body {
         padding: 10px;
     }
 }
+
+
+
+#historial{
+
+margin-top: 10px;
+
+}
+
+.historial-item{
+    display: inline-block;
+    margin: 3px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f7ca01;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 14px;
+
+
+
+
+ margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #f7ca01;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+}
+
+
+.historial-item:hover {
+    background: #3498db;
+    color: white;
+}
+
+#phist{
+        font-family: 'Georgia', serif;
+        font-size: 1.1em;
+        color: #333;
+        line-height: 1.6;
+       
+        margin-bottom: 1em;
+        text-indent: 20px;
+}

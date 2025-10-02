@@ -15,6 +15,7 @@ const maxPokemon = 168  ; // Limitar a los primeros 168 Pokemones
 // Inicializar la app
 document.addEventListener('DOMContentLoaded', () => {
     cargarListaPokemon();
+    renderizarHistorial(); // Renderizar historial al cargar la página
 
     // Buscar al presionar en el input de busqueda
     searchInput.addEventListener('keydown', (event) => {   // Buscar al presionar enter
@@ -106,10 +107,14 @@ searchButton.addEventListener('click', () => {
     if (searchTerm) {
         fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm}`)
             .then(response => response.json())
-            .then(data => mostrarModal(data))
+            .then(data => {
+                mostrarModal(data);
+                guardarEnHistorial(searchTerm); // Guardar en historial
+            })
             .catch(error => alert('Pokémon no encontrado'));
     }
 });
+
 
 // Obtener detalles de un Pokemon especifico
 function fetchDetallePokemon(url) {
@@ -283,3 +288,43 @@ function mostrarFavoritos() {
         renderizarPaginacion();
     }
 }
+
+// ====== HISTORIAL DE BÚSQUEDAS ======
+function guardarEnHistorial(searchTerm) {
+    let historial = JSON.parse(localStorage.getItem('historial')) || [];
+    
+    // Evitar duplicados, poner busqueda ms reciente primero
+    historial = historial.filter(item => item !== searchTerm);
+    historial.unshift(searchTerm);
+
+    // Guardar maximo 10 busquedas
+    if (historial.length > 10) historial.pop();
+
+    localStorage.setItem('historial', JSON.stringify(historial));
+    renderizarHistorial();
+}
+
+
+
+
+
+
+function renderizarHistorial() {
+    const historial = JSON.parse(localStorage.getItem('historial')) || [];
+    const historialDiv = document.getElementById('historial');
+    historialDiv.innerHTML = '';
+
+    historial.forEach(item => {
+        const span = document.createElement('span');
+        span.classList.add('historial-item');
+        span.textContent = capitalize(item);
+        span.addEventListener('click', () => {
+            searchInput.value = item;
+            searchButton.click();
+        });
+        historialDiv.appendChild(span);
+    });
+}
+
+
+
