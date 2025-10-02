@@ -28,7 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // Renderizar la paginación
 
 function renderizarPaginacion() {
-    const totalPaginas = Math.ceil(maxPokemon / limit);
+    let totalPokemones = maxPokemon;
+    if (isViewingFavorites) {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        totalPokemones = favorites.length;
+    }
+    const totalPaginas = Math.ceil(totalPokemones / limit);
     const paginaActual = Math.floor(currentOffset / limit) + 1;
 
     function crearBoton(etiqueta, pagina, deshabilitado = false) {
@@ -62,7 +67,11 @@ function renderizarPaginacion() {
             if (pagina >= 1 && pagina <= totalPaginas && pagina !== paginaActual) {
                 currentOffset = (pagina - 1) * limit;
                 pokemonListElement.innerHTML = '';
-                cargarListaPokemon();
+                if (isViewingFavorites) {
+                    mostrarFavoritos();
+                } else {
+                    cargarListaPokemon();
+                }
             }
         };
     });
@@ -123,7 +132,7 @@ function displayCartaPokemon(pokemon) {
 
     card.innerHTML = `
         <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
-        <h3>${capitalize(pokemon.name)}</h3>
+        <h3>${capitalize(pokemon.name)} <span title="Ver más información" style="font-size:1em;cursor:pointer;">👁</span></h3>
         <button class="favorite-btn">${isFavorite(pokemon.name) ? 'Quitar de Favoritos' : 'Agregar a Favoritos'}</button>
     `;
 
@@ -234,33 +243,43 @@ window.addEventListener('scroll', () => {
 
 // Mostrar favoritos en una lista
 function mostrarFavoritos() {
-    isViewingFavorites = true; // Establecer estado de favoritos
+    isViewingFavorites = true;
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const totalPaginas = Math.ceil(favorites.length / limit);
+
+    // Ajustar currentOffset si es mayor al total de favoritos
+    if (currentOffset >= favorites.length && favorites.length > 0) {
+        currentOffset = (totalPaginas - 1) * limit;
+    }
+
     if (favorites.length === 0) {
+        pokemonListElement.innerHTML = '';
         alert('No hay Pokémon favoritos agregados aún.');
+        renderizarPaginacion();
     } else {
-        pokemonListElement.innerHTML = ''; // Limpiar la lista actual
-        favorites.forEach(pokemon => {
+        pokemonListElement.innerHTML = '';
+        const paginaActual = Math.floor(currentOffset / limit);
+        const favoritosPagina = favorites.slice(paginaActual * limit, (paginaActual + 1) * limit);
+
+        favoritosPagina.forEach(pokemon => {
             if (pokemon.name) {
                 const card = document.createElement('div');
                 card.classList.add('pokemon-card');
                 card.innerHTML = `
                     <img src="${pokemon.image}" alt="${pokemon.name}">
-                    <h3>${capitalize(pokemon.name)}</h3>
+                    <h3>${capitalize(pokemon.name)} <span title="Ver más información" style="font-size:1em;cursor:pointer;">👁</span></h3>
                     <button class="favorite-btn">Quitar de Favoritos</button>
                 `;
-                
-                // Obtener detalles del Pokémon al hacer clic en el nombre
                 card.querySelector('h3').addEventListener('click', () => {
                     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
                         .then(response => response.json())
                         .then(data => mostrarModal(data))
                         .catch(error => alert('No se pudo cargar la información del Pokémon'));
                 });
-
                 card.querySelector('.favorite-btn').addEventListener('click', () => toggleFavorite(pokemon.name, pokemon.image));
                 pokemonListElement.appendChild(card);
             }
         });
+        renderizarPaginacion();
     }
 }
