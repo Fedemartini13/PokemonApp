@@ -180,7 +180,7 @@ body {
     cursor: default;
 }
 
-/* --- Responsive para móviles --- */
+/* --- Responsive para celulares etc --- */
 @media (max-width: 700px) {
     #lista-pokemones {
         grid-template-columns: repeat(2, 1fr);
@@ -209,5 +209,3 @@ body {
         padding: 10px;
     }
 }
-
-/* --- Fin de responsive --- */
