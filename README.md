@@ -52,12 +52,12 @@ pokemon-app/
 
 ## Decisiones de diseño y funcionalidad
 
-1. **Paginación fija**: Se decidió limitar a los primeros 168 Pokémon para mantener tiempos de carga rápidos y no saturar la interfaz.
-2. **Historial de búsqueda**: Guardado en `localStorage` y limitado a 10 ítems, con el más reciente primero.
-3. **Favoritos**: Guardados también en `localStorage`, con opción de visualizarlos y removerlos.
-4. **Modal para detalles**: Permite ver información relevante de cada Pokémon sin recargar la página.
-5. **Responsive Design**: La aplicación se adapta a dispositivos móviles usando media queries, asegurando legibilidad y accesibilidad.
-6. **JS**: Se decidió no usar frameworks externos para mantener el proyecto simple, ligero y educativo.
+1. **Paginación fija**: Se decidió limitar a los primeros 168 Pokémon para mantener tiempos de carga rápidos y no saturar la interfaz, sin embargo el usuario puede buscar el nombre de cualquier pokemon que este incluido en la api por ejemplo "Ralts" que corresponde al numero 268.
+3. **Historial de búsqueda**: Guardado en `localStorage` y limitado a 10 ítems, con el más reciente primero.
+4. **Favoritos**: Guardados también en `localStorage`, con opción de visualizarlos y removerlos.
+5. **Modal para detalles**: Permite ver información relevante de cada Pokémon sin recargar la página.
+6. **Responsive Design**: La aplicación se adapta a dispositivos móviles usando media queries, asegurando legibilidad y accesibilidad.
+7. **JS**: Se decidió no usar frameworks externos para mantener el proyecto simple.
 
 ---
 
